@@ -24,7 +24,10 @@ class RouteAdder(HTMLParser):
             for attr, value in attrs:
                 if attr in ('href', 'src'):
                     # Modify the href attribute here
-                    new_value = f"/https://{self.site_root}{value}" if value[0] == '/' else value
+                    try:
+                        new_value = f"/https://{self.site_root}{value}" if value[0] == '/' else value
+                    except IndexError:
+                        new_value = value # just skip it
                     modified_attrs.append((attr, new_value))
                 else:
                     modified_attrs.append((attr, value))
